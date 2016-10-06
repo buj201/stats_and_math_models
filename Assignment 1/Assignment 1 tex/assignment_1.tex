@@ -1,0 +1,313 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Short Sectioned Assignment
+% LaTeX Template
+% Version 1.0 (5/5/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Frits Wenneker (http://www.howtotex.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+%\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{ \normalfont\scshape} % Make all sections the default font and small caps
+
+
+\renewcommand{\thesubsection}{\alph{subsection}} %Make subsections start with letters
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	Assignment 1}
+
+\author{Benjamin Jakubowski} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+
+\maketitle % Print the title
+
+%----------------------------------------------------------------------------------------
+%	PROBLEM 1
+%----------------------------------------------------------------------------------------
+
+\section{Stranded}
+
+\subsection{Probability three friends come}
+
+In this problem, each friend comes and picks you up with a probability of 0.1. If you assume each friend decides independently from the others, the number of friends that come pick you up can be modeled as $X \sim Binomial(.1)$. Thus, the probability that three of your five friends come is
+\begin{equation*}
+P(X=3) = {5 \choose 3}.1^3.9^ 2 = .0081
+\end{equation*}
+
+\subsection{Lower bound on probability no friends come}
+
+If your friends do not act independently, we can place a lower bound of 0.5 on the probability that no friends come and you are left stranded (i.e. $P(X=0) \geq 0.5)$. To see this, we can model all your friends' decisions using a single uniform random variable $U(0,1)$. Each friend has a decision rule based on U. WOLOG, for friend 1 this rule is
+
+ \begin{displaymath}
+   F_1 = \left\{
+     \begin{array}{lr}
+       \text{Picks you up} & : \text{if } U \in [0,0.1]\\
+       \text{Doesn't pick you up} & : \text{if } U \notin [0,0.1]\\
+     \end{array}
+   \right.
+\end{displaymath} 
+
+
+ Now consider friend 2. To minimize the probability you are stranded (or equivalently maximize the probability you are picked up), 
+ 
+ \begin{equation*}
+ (F_2 = \text{Pick up}) \subseteq (F_1 = \text{Doesn't pick you up})
+ \end{equation*}
+
+Thus, let  
+
+ \begin{displaymath}
+   F_1 = \left\{
+     \begin{array}{lr}
+       \text{Picks you up} & : \text{if } U \in [0.1,0.2]\\
+       \text{Doesn't pick you up} & : \text{if } U \notin [0.1,0.2]\\
+     \end{array}
+   \right.
+\end{displaymath} 
+
+This argument can be extended to the next three friends (constructing a decision rule such that $ (F_i = \text{Pick up}) \subseteq (F_{k} = \text{Doesn't pick you up})  \text{ for all } k \in {1, ..., i-1}$). This results in you being picked up with a probability of 0.5. Thus, $P(X=0) \geq 0.5)$.
+
+%----------------------------------------------------------------------------------------
+%	PROBLEM 2
+%----------------------------------------------------------------------------------------
+\section{Army Camp}
+
+\subsection{Probability Joe diseased given group test positive}
+
+First, notation: let $Joe_+, Test_+,$ and $Group_+$ represent that Joe is diseased, the test is positive, and the group sample contains the disease. $Joe_-, Test_-,$ and $Group_-$ represent the inverses. Then the probability Joe is diseased given the group test is positive is given by:
+
+\begin{align*}
+P(Joe_+ | Test_+)& = \frac{P(Joe_+ \cap Test_+)}{P(Test_+)}\\
+   & = \frac{P(Joe_+)P(Test_+ | Joe_+)}{P(Test_+ | Joe_+)+P(Test_+ | Joe_- \cap Group_+)+P(Test_+ | Joe_- \cap Group_-)}\\
+   & = \frac{.2*.9}{.2*.9+..8*(1-.8^9)*.9+.1*.8^9*.8}\\
+   & = .2211
+\end{align*}
+
+(Note- implicit in this expression is the fact that if Joe is positive, the group sample is also positive- thus $P(Test_+ | Joe_+) = P(Test_+ | Joe_+ \cap Group_+)$.)
+
+\subsection{Conditional independence of $Test_+$ and $Joe_+$ given fridge is broken}
+
+First, some new notation: let $F_b$ and $F_w$ represent the events the fridge is broken and the fridge is working, respectively. If $F_b$ (which happens with probability 0.4), then the test always reads positive. Therefore, given the event $F_b$, $T_+$ and $Joe_+$ are independent. To see this, note
+\begin{equation*}
+P(Joe_+ | Test_+ \cap Fridge_b) = P(Joe_+ | Fridge_b)
+\end{equation*}
+since, given the fridge is broken, the event of a positive test $T_+$ gives no additional information about Joe's state (since the test result is now completely determined by the broken fridge).
+
+\subsection{Probability fridge is broken given $Test_+$ }
+
+The probability the fridge is broken given the test is positive is given by:
+
+\begin{align*}
+P(Fridge_b | Test_+)& = \frac{P(Fridge_b \cap Test_+)}{P(Test_+)}\\
+   & = \frac{P(Fridge_b)}{P(Test_+ | Fridge_b)*P(Fridge_b) + P(Test_+ | Fridge_w)*P(Fridge_w)}\\
+   & = \frac{.4}{1*.4+.6 * .2211}\\
+   & = .4502
+\end{align*}
+
+%----------------------------------------------------------------------------------------
+%	PROBLEM 3
+%----------------------------------------------------------------------------------------
+\section{Old Car}
+
+\subsection{Analysis of distribution of first time car breaks}
+
+First, let $X$ be the random variable modeling the number of drives until the car breaks down. Then $X \sim Geometric(.25)$. The probability the car breaks down after $k'$ drives is
+\begin{equation*}
+P(X = k') = .75^{k'-1} * .25
+\end{equation*}
+
+The probability that the car breaks down after $k+k'$ drives, given it has already gone k drives, is\footnote{Note the denominator was evaluated using the CDF reported for a Geometric RV on Wikipedia.}:
+
+\begin{align*}
+P(X = k + k' | X > k)& = \frac{P(X = k + k' \cap X > k)}{P(X>k)}\\
+   & =\frac{P(X = k + k')}{P(X>k)}\\
+   & =\frac{P(X = k + k')}{1-P(X \leq k)}\\
+   & =\frac{.75^{k+k'-1}*.25}{1-(1-.75^k)}\\
+   & = \frac{.75^{k+k'-1}*.25}{.75^k}\\
+   & = .75^{k'-1}*.25 = P(X = k') 
+\end{align*}
+
+Since $P(X = k') = P(X = k + k' | X > k)$, this implies the distribution of the first time the car breaks is memoryless.
+   
+\subsection{Probability car breaks down $n$ times in first $k$ drives}
+
+The probability the car breaks down $n$ times in the first $k$ drives is a binomial random variable $B(n,.25)$
+
+\begin{equation*}
+P(B = k) = {k \choose n} .25^n .75^{k-n}
+\end{equation*}
+
+\subsection{Probability the $n$th time the car breaks down is after $k$ drives}
+
+The probability the $n$th time the car breaks down is after $k$ drives is equivalent to the probability the car breaks down $(n-1)$ or fewer times in the first $k$ drives:
+\begin{equation*}
+P(B < n) = \sum_{i=0}^{n-1}{k \choose i} .25^i .75^{k-i}
+\end{equation*}
+Note this is simply the CDF of the binomial distribution.
+
+
+\subsection{Evaluating a new PMF}
+
+Now, let $X$ be the number of drives until the car breaks down. Then
+\begin{equation*}
+P(X = k') = 1 - 2^{-k'} \\
+\end{equation*}
+
+Now consider $P(X = k + k' | x >k)$
+
+\begin{align*}
+P(X = k+ k' | X > k)& = \frac{P(X = k + k')}{P(X > k)}\\
+   & = \frac{P(X = k + k')}{1- P(X = k)}\\
+   & = \frac{1 - 2^{-(k+k')}}{1-(1-2^{-k})}\\
+   & = \frac{1 - 2^{-(k+k')}}{2^{-k}}\\
+   & = (1 - 2^{-(k+k')})*2^{k}\\
+   & = P(X = k + k') * 2^k.
+\end{align*}
+
+Thus, given this probability model, if you've already driven $k$ times, you're $2^k$ times more likely to end up having an accident.
+
+This model seems to be (in some sense) more appropriate than the memoryless geometric distribution from part a. It is more appropriate if we assume that damage to your 2000 Ford Taurus accumulates with each drive. A further improvement to the model might be changing the geometric ratio from 2 to a smaller value (such that damage isn't modeled to accumulate so quickly).
+%----------------------------------------------------------------------------------------
+%	PROBLEM 4
+%----------------------------------------------------------------------------------------
+\section{Radioactive Decay}
+
+\subsection{PMF of number of hours till positive reading}
+
+The true decay time is an exponential random variable $X \sim exponential(\lambda)$ with
+\begin{equation*}
+f_X(x)=\lambda e^{-\lambda x}
+\end{equation*}
+
+Discretizing for hourly measurements, for y $\in \mathbb{N}$ our new random variable $Y$ has the pmf 
+\begin{align*}
+f_Y(y)& = \int_{y-1}^{y} \lambda e^{-\lambda x} \mathrm{d}x\\
+& = -e^{-\lambda x} \Big|_{y-1}^y= -e^{-\lambda y} - (-e^{-\lambda (y-1)}) = e^{-\lambda(y-1)} - e^{-\lambda y}
+\end{align*}
+
+\subsection{PDF for error between reading and true decay time}
+
+Let $y_i$ be the reading. Then the true decay time $T$ is $y_i-1 \leq T \leq y_i$.
+
+The PDF and CDF for $T$ (expressed in terms of the unconditional PDF and CDF of X) is 
+ \begin{displaymath}
+   f_T(t) = \left\{
+     \begin{array}{lr}
+        \frac{f_X(x)}{F_X(y_i) - F_X(y_i-1)} & : x \in [y_i-1,y_i]\\
+       0 & : x \notin [y_i-1,y_i]
+     \end{array}
+   \right.
+\end{displaymath} 
+and
+ \begin{displaymath}
+   F_T(t) = \left\{
+     \begin{array}{lr}
+       0 & : x < y_i -1\\
+        \frac{F_X(x)}{F_X(y_i) - F_X(y_i-1)} & : x \in [y_i-1,y_i]\\
+       1 & : x \geq y_i
+     \end{array}
+   \right.
+\end{displaymath} 
+
+
+Now, let $E$ be the random variable describing the error between our on-the-hour measurement, $y_i$, and the true time of decay, $T$. Then $E = y_i - T$. Thus
+\begin{align*}
+F_E(e) &= P(E \leq e) = P(y_i - T \leq e) = P (T \geq y_i - e) = 1 - P(T \leq y_i - e)\\
+   & = 1 - F_T(y_i-e) = 1 - \frac{F_X(y_i-e)}{F_X(y_i) - F_X(y_i-1)}\\
+\end{align*}
+
+Finally, 
+\begin{align*}
+f_E(e) &= \frac{d}{de}F_E(e)\\
+   &= \frac{d}{de}(1-\frac{F_X(y_i-e)}{F_X(y_i) - F_X(y_i-1)})\\
+   &= \frac{f_X(y_i-e)}{F_X(y_i) - F_X(y_i-1)}
+\end{align*}
+
+%----------------------------------------------------------------------------------------
+%	PROBLEM 5
+%----------------------------------------------------------------------------------------
+\section{Generating Random Variables}
+
+\subsection{CDF of $W = F_Y(Y)$}
+
+Assume $Y$, the available random variable, is continuous. Let $W = F_Y(Y)$. Then the CDF of $W$ is
+\begin{align*}
+F_W(w)& = P(W \leq w)\\
+   &= P(F_Y(Y) \leq w)\\
+   &= P(Y \leq F_Y^{-1}(w))\\
+   &= F_Y[F_Y^{-1}(w)]=w\\
+\end{align*}
+
+Thus, $F_W(w) = w$. This CDF implies that $W$ is $U \sim (0,1)$.
+
+\subsection{CDF of $F_X^{-1}(W)$}
+
+Let $Z = F_X^{-1}(W)$. Then the CDF of $Z$ is
+
+\begin{align*}
+F_Z(z)&= P(Z \leq z)\\
+   &= P(F_X^{-1}(W) \leq z)\\
+   &= P(W \leq F_X(z))\\
+   &= F_W(F_X(z))\\
+   &= F_X(z)
+\end{align*}
+
+That's why our friend is telling us to do this- it gives us the desired CDF $F_X$. 
+
+\subsection{$F_Y$ non-invertible}
+
+Even if $F_Y$ is non-invertible, this method will allow you to determine the CDF $F_X$.\\
+
+Let $R_Y$ be the support of $Y$. Assume that for a fixed constant $w$, all the values of $y$ such that $F_Y(y) = w$ belong to a closed interval $[a(w),b(w)]$.\\
+
+Then take $R_Y \setminus [a(w),b(w))$. Now the only supported value of $y$ such that $F_Y(y) = w$ is $y = b$. \\
+
+Repeating this process for every such constant $w$ (noting the number of such constants must be a countable) returns a set $S$ over which $F_Y$ is invertible. Thus, restricting ourselves to this set allows us to construct $F_Y^{-1}: S\rightarrow [0,1]$, thus allowing us to construct a $U \sim (0,1)$ random variable (and ultimately our desired CDF) even if $F_Y$ is non-invertible.
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
